@@ -1,9 +1,14 @@
-const mongoose = require('mongoose');
-require('dotenv').config();
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-module.exports = function connectMongoDB() {
-  mongoose.connect(process.env.DB_URL, {
+const url = process.env.MONGO_URL || 'mongodb://localhost:27017/desafio';
+
+function connectMongoDB() {
+  mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-};
+}
+
+module.exports = connectMongoDB;
+
