@@ -26,17 +26,41 @@ const CompaniesController = {
     const updateCompany = await Companies.findByIdAndUpdate(id, {
       companie_name,
       maintenanceManager,
-    }, { new: true }); 
+    }, { new: true })
+    .then(result => {
+      return res.status(201).json(result);
+    })
+    .catch(err => {
+      if (err) {
+        return res.status(400)
+          .json({
+            msg: "Company not found",
+          }) && 
+          console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
+      }
+    });
 
-    return res.status(201).json(updateCompany);
   },
 
   destroy: async (req, res) => {
     const { id } = req.params;
-    const deleteCompany = await Companies.findByIdAndDelete(id);
 
-    return res.sendStatus(204);
+    const deleteCompany = await Companies.findByIdAndDelete(id)
+    .then(result => {
+      return res.sendStatus(204);
+    })
+    .catch(err => {
+      if (err) {
+        return res.status(400)
+          .json({
+            msg: "Company not found",
+          }) && 
+          console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
+      }
+    });
+
   }
+
 };
 
 module.exports = CompaniesController;
