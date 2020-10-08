@@ -1,7 +1,7 @@
-const Companies = require('../models/Companies');
+const Company = require('../models/Company');
 
-const UsuariosController = {
-  index: async (req, res) => {
+const ActiveController = {
+  show: async (req, res) => {
     return res.status(200).json({ "index": "OK!!!" });
   },
 
@@ -18,4 +18,4 @@ const UsuariosController = {
   }
 };
 
-module.exports = UsuariosController;
+module.exports = ActiveController;
