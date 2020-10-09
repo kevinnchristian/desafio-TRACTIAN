@@ -1,4 +1,4 @@
-const Company = require('../models/Company');
+const [ Company ] = require('../models/Company');
 
 const CompanyController = {
   index: async (_req, res) => {
@@ -21,8 +21,6 @@ const CompanyController = {
       const newCompany = await Company.create({
         company_name,
         maintenanceManager,
-        units: [],
-        users: [],
       }).then(result => {
         return res.status(201).json(result);
       }).catch(err => {
@@ -36,17 +34,17 @@ const CompanyController = {
     } catch (err) {
       return res.status(400).json({ 
         error: true,
-        msg: "Error create" 
+        msg: "Error in create" 
       });
     } 
   },
 
   update: async (req, res) => {
-    const { id } = req.params;
+    const { company_id } = req.params;
     const { company_name, maintenanceManager } = req.body;
     
     try {
-      const updateCompany = await Company.findByIdAndUpdate(id, {
+      const updateCompany = await Company.findByIdAndUpdate(company_id, {
         company_name,
         maintenanceManager,
       }, { new: true })
@@ -70,10 +68,10 @@ const CompanyController = {
   },
 
   destroy: async (req, res) => {
-    const { id } = req.params;
+    const { company_id } = req.params;
 
     try {
-      const deleteCompany = await Company.findByIdAndDelete(id)
+      const deleteCompany = await Company.findByIdAndDelete(company_id)
       .then(result => {
         return res.sendStatus(204);
       })

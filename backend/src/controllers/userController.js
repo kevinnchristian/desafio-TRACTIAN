@@ -1,31 +1,129 @@
-const Company = require('../models/Company');
-const User = require('../models/User');
-
-function clearInput(params1, params2, params3) {
-  params1 = "";
-  params2 = "";
-  params3 = "";
-};
+const [ Company, User ] = require('../models/Company');
 
 const UserController = {
+  index: async (req, res) => {
+    try {
+      const { company_id } = req.params;
+      const company = await Company.findOne({"_id": company_id})
+      .then(company => {
+        return res.status(200).json(company.users);
+      }).catch(err => {
+        if (err) {
+          return res.status(400).json({
+              msg: "Request error",
+            }) && 
+            console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
+        }
+      })
+    } catch (err) {
+      return res.status(400).json({ 
+        error: true,
+        msg: "Not registration" 
+      });
+    }
+  },
+
   show: async (req, res) => {
-    const { id } = req.params;
-    const { users } = await Company.findById(id);
-  
-    return res.status(200).json(users);
+    try {
+      const { user_id } = req.params;
+      const user = await User.findOne({"_id": user_id})
+      .then(user => {
+        return res.status(200).json(user);
+      }).catch(err => {
+        if (err) {
+          return res.status(400).json({
+              msg: "Request error",
+            }) && 
+            console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
+        }
+      })
+    } catch (err) {
+      return res.status(400).json({ 
+        error: true,
+        msg: "Not registration" 
+      });
+    }
   },
 
   create: async (req, res) => {
-    return res.status(201).json({ "create": "OK!!!" });
+    try {
+      const { company_id } = req.params;
+      const { user_name, registration, office } = req.body;
+      const company = await Company.findOne({"_id": company_id});
+      const newUser = await User.create({ user_name, registration, office });
+      
+      company.users.push(newUser);
+      await company.save()
+      .then(user => {
+        return res.status(201).json(newUser);
+      }).catch(err => {
+        if (err) {
+          return res.status(400).json({
+              msg: "Request error",
+            }) && 
+            console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
+        }
+      })
+    } catch (err) {
+      return res.status(400).json({ 
+        error: true,
+        msg: "Error in create" 
+      });
+    } 
   },
 
   update: async (req, res) => {
-    return res.status(201).json({ "update": "OK!!!" });
+    const { user_id } = req.params;
+    const { user_name, registration, office } = req.body;
+    
+    try {
+      const updateUser = await User.findOneAndUpdate({ "_id": user_id }, {
+        user_name, 
+        registration, 
+        office
+      }, { new: true })
+      .then(result => {
+        return res.status(201).json(result);
+      })
+      .catch(err => {
+        if (err) {
+          return res.status(400).json({
+              msg: "User not found",
+            }) && 
+            console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
+        }
+      });
+    } catch (err) {
+      return res.status(400).json({ 
+        error: true,
+        msg: "Error in update" 
+      });
+    }
   },
 
   destroy: async (req, res) => {
-    return res.status(204).json({ "destroy": "OK!!!" });
-  },
+    try {
+      const { company_id, user_id } = req.params;
+      const company = await Company.findOne({ "_id": company_id })
+      const deleteUser = await User.findByIdAndRemove({ "_id": user_id });
+
+      company.users.remove({ "_id": user_id });
+      await company.save()
+      .then(result => {
+        return res.sendStatus(204);
+      })
+      .catch(err => {
+        if (err) {
+          return res.status(400).json({
+              msg: "Company not found",
+            }) && 
+            console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
+        }
+      });
+    } catch (err) {
+      return res.status(400).json({ msg: "Error in delete" });
+    }
+  }
 
 };
 

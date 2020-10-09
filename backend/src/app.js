@@ -10,9 +10,6 @@ const indexRouter = require('./routes');
 
 const app = express();
 
-// Conectar com MongoDB
-database();
-
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
