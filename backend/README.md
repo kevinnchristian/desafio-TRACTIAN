@@ -11,9 +11,17 @@
 - Para iniciar projeto node: `yarn init -y`
 - Para rodar a aplicação `yarn start`, este comando irá executar o script: `nodemon ./src/bin/www`
 
+### Banco de Dados - MongoDB Atlas
+- Criar um cluster na plataforma web `MongoDB Atlas`
+- Criar um `database`
+- Para conectar com banco basta criar um arquivo `.env` na raiz do projeto e inserir a `URI` que a plaforma oferece para conexão
+- Rodar a aplicação para criar os documentos no banco
+
 ### Software para teste:
-- `Insomnia` - Testando métodos HTTP e Parâmetros.
+- `Insomnia` - Testando métodos HTTP e Parâmetros
+- O arquivo de testes é o ``, basta baixar e rodar no insomnia
 
 ### Observações:
 - Server está rodando na porta `3335`
-- O arquivo `.env` já estão com as configurações do banco, a boa prática seria criar um arquivo `.env.example` mas, para ficar mais rápido e fácil o teste de terceiros preferi deixar aplicação deste modo.
+- O módulo `cors` faz com que a aplicação saiba que nenhuma outra fora a nossa está tentando fazer conexão com a nossa API
+- O arquivo `.env.example` tem o exemplo de como deve ser criado o arquivo `.env`, este arquivo tem que conter a URI que o `Mongo Atlas` disponibiliza para conexão com banco

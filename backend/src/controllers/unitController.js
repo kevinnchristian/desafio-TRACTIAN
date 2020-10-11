@@ -1,12 +1,12 @@
-const [ Company, User ] = require('../models/Company');
+const [ Company, Unit ] = require('../models/Company');
 
-const UserController = {
+const UnitController = {
   index: async (req, res) => {
     try {
       const { company_id } = req.params;
       const company = await Company.findOne({ "_id": company_id })
       .then(company => {
-        return res.status(200).json(company.users);
+        return res.status(200).json(company.units);
       }).catch(err => {
         if (err) {
           return res.status(400).json({
@@ -25,8 +25,8 @@ const UserController = {
 
   show: async (req, res) => {
     try {
-      const { user_id } = req.params;
-      const user = await User.findOne({ "_id": user_id })
+      const { unit_id } = req.params;
+      const unit = await Unit.findOne({ "_id": unit_id })
       .then(user => {
         return res.status(200).json(user);
       }).catch(err => {
@@ -48,14 +48,14 @@ const UserController = {
   create: async (req, res) => {
     try {
       const { company_id } = req.params;
-      const { user_name, registration, office } = req.body;
+      const { location } = req.body;
       const company = await Company.findOne({ "_id": company_id });
-      const newUser = await User.create({ user_name, registration, office });
+      const newUnit = await Unit.create({ location });
       
-      company.users.push(newUser._id);
+      company.units.push(newUnit._id);
       await company.save()
       .then(user => {
-        return res.status(201).json(newUser);
+        return res.status(201).json(newUnit);
       }).catch(err => {
         if (err) {
           return res.status(400).json({
@@ -73,15 +73,12 @@ const UserController = {
   },
 
   update: async (req, res) => {
-    const { company_id, user_id } = req.params;
-    const { user_name, registration, office } = req.body;
+    const { unit_id } = req.params;
+    const { location } = req.body;
     
     try {
-      const updateUser = await User.findOneAndUpdate({ "_id": user_id }, {
-        user_name, 
-        registration, 
-        office
-      }, { new: true })
+      const updateUnit = await Unit.findOneAndUpdate({ "_id": unit_id },
+      { location }, { new: true })
       .then(result => {
         return res.status(201).json(result);
       })
@@ -104,11 +101,11 @@ const UserController = {
 
   destroy: async (req, res) => {
     try {
-      const { company_id, user_id } = req.params;
-      const company = await Company.findOne({ "_id": company_id });
-      const deleteUser = await User.findByIdAndRemove({ "_id": user_id });
+      const { company_id, unit_id } = req.params;
+      const company = await Company.findOne({ "_id": company_id })
+      const deleteUnit = await Unit.findByIdAndRemove({ "_id": unit_id });
 
-      company.users.remove({ "_id": user_id });
+      company.units.remove({ "_id": unit_id });
       await company.save()
       .then(result => {
         return res.sendStatus(204);
@@ -128,4 +125,4 @@ const UserController = {
 
 };
 
-module.exports = UserController;
+module.exports = UnitController;
