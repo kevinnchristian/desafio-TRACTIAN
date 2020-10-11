@@ -1,12 +1,12 @@
-const [ Company, Unit ] = require('../models/Company');
+const [ Company, Unit, Active ] = require('../models/Company');
 
-const UnitController = {
+const ActiveController = {
   index: async (req, res) => {
     try {
-      const { company_id } = req.params;
-      const company = await Company.findOne({ "_id": company_id })
-      .then(company => {
-        return res.status(200).json(company.units);
+      const { unit_id } = req.params;
+      const unit = await Unit.findOne({ "_id": unit_id })
+      .then(unit => {
+        return res.status(200).json(unit.actives);
       }).catch(err => {
         if (err) {
           return res.status(400).json({
@@ -25,10 +25,10 @@ const UnitController = {
 
   show: async (req, res) => {
     try {
-      const { unit_id } = req.params;
-      const unit = await Unit.findOne({ "_id": unit_id })
-      .then(unit => {
-        return res.status(200).json(unit);
+      const { active_id } = req.params;
+      const active = await Active.findOne({ "_id": active_id })
+      .then(active => {
+        return res.status(200).json(active);
       }).catch(err => {
         if (err) {
           return res.status(400).json({
@@ -48,14 +48,40 @@ const UnitController = {
   create: async (req, res) => {
     try {
       const { company_id } = req.params;
-      const { location } = req.body;
+      const { 
+        image,
+        active_name,
+        responsible,
+        description,
+        model,
+        status,
+        healthscore,
+        value,
+        resaleValue,
+        monthPurchase,
+        yearPurchase,
+        lifespan 
+      } = req.body;
       const company = await Company.findOne({ "_id": company_id });
-      const newUnit = await Unit.create({ location });
+      const newActive = await Active.create({ 
+        image,
+        active_name,
+        responsible,
+        description,
+        model,
+        status,
+        healthscore,
+        value,
+        resaleValue,
+        monthPurchase,
+        yearPurchase,
+        lifespan 
+      });
       
-      company.units.push(newUnit._id);
+      company.units.actives.push(newActive._id);
       await company.save()
-      .then(result => {
-        return res.status(201).json(newUnit);
+      .then(user => {
+        return res.status(201).json(newActive);
       }).catch(err => {
         if (err) {
           return res.status(400).json({
@@ -72,12 +98,38 @@ const UnitController = {
     } 
   },
 
-  update: async (req, res) => {
+  update: async (req, res) => { 
     try {
-      const { unit_id } = req.params;
-      const { location } = req.body;
-      const updateUnit = await Unit.findOneAndUpdate({ "_id": unit_id },
-      { location }, { new: true })
+      const { active_id } = req.params;
+      const {  
+        image,
+        active_name,
+        responsible,
+        description,
+        model,
+        status,
+        healthscore,
+        value,
+        resaleValue,
+        monthPurchase,
+        yearPurchase,
+        lifespan 
+      } = req.body;
+      const updateActive = await Active.findOneAndUpdate({ "_id": active_id },
+      { 
+        image,
+        active_name,
+        responsible,
+        description,
+        model,
+        status,
+        healthscore,
+        value,
+        resaleValue,
+        monthPurchase,
+        yearPurchase,
+        lifespan 
+      }, { new: true })
       .then(result => {
         return res.status(201).json(result);
       })
@@ -100,11 +152,11 @@ const UnitController = {
 
   destroy: async (req, res) => {
     try {
-      const { company_id, unit_id } = req.params;
+      const { company_id, active_id } = req.params;
       const company = await Company.findOne({ "_id": company_id })
-      const deleteUnit = await Unit.findByIdAndRemove({ "_id": unit_id });
+      const deleteActive = await Active.findByIdAndRemove({ "_id": active_id });
 
-      company.units.remove({ "_id": unit_id });
+      company.units.actives.remove({ "_id": active_id });
       await company.save()
       .then(result => {
         return res.sendStatus(204);
@@ -124,4 +176,4 @@ const UnitController = {
 
 };
 
-module.exports = UnitController;
+module.exports = ActiveController;

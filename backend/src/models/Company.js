@@ -27,10 +27,6 @@ const Active = new Schema({
     type: String,
     required: true,
   },
-  description: {
-    type: Number,
-    required: true,
-  },
   status: {
     type: String,
     required: true,
@@ -116,7 +112,6 @@ const User = new Schema({
 }
 );
 
-
 const Company = new Schema(
   {
     company_name: {
@@ -133,10 +128,7 @@ const Company = new Schema(
           type: Schema.Types.ObjectId, 
           ref: 'Company', 
           require: true,
-        },
-        location: {
-          type: String,
-        },
+        }
       },
     ],
     users: [
@@ -145,13 +137,7 @@ const Company = new Schema(
           type: Schema.Types.ObjectId, 
           ref: 'Company', 
           require: true,
-        },
-        user_name: {
-          type: String,
-        },
-        registration: {
-          type: Number,
-        },
+        }
       },
     ],
   },

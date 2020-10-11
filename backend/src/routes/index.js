@@ -4,7 +4,7 @@ const router = express.Router();
 const companyController = require('../controllers/companyController');
 const userController = require('../controllers/userController');
 const unitController = require('../controllers/unitController');
-// const activeController = require('../controllers/activeController');
+const activeController = require('../controllers/activeController');
 
 // Rotas empresas de forma geral
 router.get('/empresa', companyController.index);
@@ -20,10 +20,11 @@ router.put('/empresa/:company_id/unidades/:unit_id', unitController.update);
 router.delete('/empresa/:company_id/unidades/:unit_id', unitController.destroy);
 
 // Rotas ativos
-// router.get('/empresa/:company_id/ativos', activeController.show);
-// router.post('/empresa/:company_id/ativos', activeController.create);
-// router.put('/empresa/:company_id/ativos', activeController.update);
-// router.delete('/empresa/:company_id/ativos', activeController.destroy);
+router.get('/empresa/:company_id/unidades/:unit_id/ativos', activeController.index);
+router.get('/empresa/:company_id/unidades/:unit_id/ativos/:active_id', activeController.show);
+router.post('/empresa/:company_id/unidades/:unit_id/ativos', activeController.create);
+router.put('/empresa/:company_id/unidades/:unit_id/ativos/:active_id', activeController.update);
+router.delete('/empresa/:company_id/unidades/:unit_id/ativos/:active_id', activeController.destroy);
 
 // Rotas usuários
 router.get('/empresa/:company_id/usuarios', userController.index);

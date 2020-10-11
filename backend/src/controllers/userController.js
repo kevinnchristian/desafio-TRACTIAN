@@ -73,10 +73,9 @@ const UserController = {
   },
 
   update: async (req, res) => {
-    const { company_id, user_id } = req.params;
-    const { user_name, registration, office } = req.body;
-    
     try {
+      const { user_id } = req.params;
+      const { user_name, registration, office } = req.body;
       const updateUser = await User.findOneAndUpdate({ "_id": user_id }, {
         user_name, 
         registration, 
