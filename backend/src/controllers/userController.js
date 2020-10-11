@@ -52,7 +52,7 @@ const UserController = {
       const company = await Company.findOne({"_id": company_id});
       const newUser = await User.create({ user_name, registration, office });
       
-      company.users.push(newUser);
+      company.users.push(newUser._id);
       await company.save()
       .then(user => {
         return res.status(201).json(newUser);
@@ -68,12 +68,12 @@ const UserController = {
       return res.status(400).json({ 
         error: true,
         msg: "Error in create" 
-      });
+      }) && console.log(err);
     } 
   },
 
-  update: async (req, res) => {
-    const { user_id } = req.params;
+  update: async (req, res, next) => {
+    const { company_id, user_id } = req.params;
     const { user_name, registration, office } = req.body;
     
     try {
@@ -93,6 +93,7 @@ const UserController = {
             console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
         }
       });
+
     } catch (err) {
       return res.status(400).json({ 
         error: true,

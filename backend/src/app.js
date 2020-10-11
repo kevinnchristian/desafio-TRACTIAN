@@ -26,6 +26,7 @@ app.use(function (req, res, next) {
 
 app.use(function (error, req, res, next) {
     res.status(error.status || 500).json({
+      "error": true,
       "status": error.status,
       "msg": error.message,
     });
