@@ -1,4 +1,7 @@
 const express = require('express');
+const multer = require('multer');
+const multerConfig = require('../config/multer');
+
 const router = express.Router();
 
 const companyController = require('../controllers/companyController');
@@ -20,8 +23,8 @@ router.delete('/empresas/:company_id/unidade/:unit_id', unitController.destroy);
 
 // Rotas ativos
 router.get('/empresas/unidade/ativo/:active_id', activeController.show);
-router.post('/empresas/:company_id/unidade/:unit_id/ativo', activeController.create);
-router.put('/empresas/ativo/:active_id', activeController.update);
+router.post('/empresas/unidade/:unit_id/ativo', multer(multerConfig).single('image'), activeController.create);
+router.put('/empresas/ativo/:active_id', multer(multerConfig).single('image'), activeController.update);
 router.delete('/empresas/unidade/:unit_id/ativo/:active_id', activeController.destroy);
 
 // Rotas usuários

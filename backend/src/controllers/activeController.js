@@ -26,11 +26,11 @@ const ActiveController = {
 
   create: async (req, res) => {
     try {
-      const { company_id, unit_id } = req.params;
+      const { unit_id } = req.params;
+      const { filename: key } = req.file;
       const { 
-        image,
         active_name,
-        responsible,
+        responsible: resp, 
         description,
         model,
         status,
@@ -41,12 +41,11 @@ const ActiveController = {
         yearPurchase,
         lifespan 
       } = req.body;
-      const company = await Company.findOne({ "_id": company_id });
       const unit = await Unit.findOne({ "_id": unit_id });
       const newActive = await Active.create({ 
-        image,
+        image: key,
         active_name,
-        responsible,
+        responsible: JSON.parse(resp),
         description,
         model,
         status,
@@ -59,7 +58,7 @@ const ActiveController = {
       });
 
       unit.actives.push(newActive._id);
-      await company.save()
+      await unit.save()
       .then(active => {
         return res.status(201).json(newActive);
       }).catch(err => {
@@ -69,7 +68,7 @@ const ActiveController = {
             }) && 
             console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
         }
-      })
+      });
     } catch (err) {
       return res.status(400).json({ 
         error: true,
@@ -78,13 +77,14 @@ const ActiveController = {
     } 
   },
 
+
   update: async (req, res) => { 
     try {
       const { active_id } = req.params;
-      const {  
-        image,
+      const { filename: key } = req.file;
+      const { 
         active_name,
-        responsible,
+        responsible: resp, 
         description,
         model,
         status,
@@ -94,12 +94,12 @@ const ActiveController = {
         monthPurchase,
         yearPurchase,
         lifespan 
-      } = req.body;
+      } = req.body;  
       const updateActive = await Active.findOneAndUpdate({ "_id": active_id },
       { 
-        image,
+        image: key,
         active_name,
-        responsible,
+        responsible: JSON.parse(resp),
         description,
         model,
         status,

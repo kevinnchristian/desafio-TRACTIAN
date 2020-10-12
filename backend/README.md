@@ -6,6 +6,7 @@
 - Instalar Nodemon: `yarn add nodemon -D`
 - Instalar Mongoose: `yarn add mongoose`
 - Instalar .env: `yarn add dotenv`
+- Instalar Multer: `yarn add multer`
 
 ### Comandos utilizados:
 - Para iniciar projeto node: `yarn init -y`
@@ -15,7 +16,7 @@
 - Criar um cluster na plataforma web `MongoDB Atlas`
 - Criar um `database`
 - Para conectar com banco basta criar um arquivo `.env` na raiz do projeto e inserir a `URI` que a plaforma oferece para conexão
-- Rodar a aplicação para criar os documentos no banco
+- Rodar a aplicação para criar os documentos no banco de dados
 
 ### Software para teste:
 - `Insomnia` - Testando métodos HTTP e Parâmetros
@@ -25,3 +26,4 @@
 - Server está rodando na porta `3335`
 - O módulo `cors` faz com que a aplicação saiba que nenhuma outra fora a nossa está tentando fazer conexão com a nossa API
 - O arquivo `.env.example` tem o exemplo de como deve ser criado o arquivo `.env`, este arquivo tem que conter a URI que o `Mongo Atlas` disponibiliza para conexão com banco
+- `Multer` é o middleware express utilizado manipular requisições multipart-form, são requisições que traz arquivos

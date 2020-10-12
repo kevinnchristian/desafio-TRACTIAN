@@ -9,16 +9,15 @@ const Active = new Schema({
     type: String,
     required: true,
   },
-  responsible: {
-    _id: {
-      type: Schema.Types.ObjectId, 
-      ref: 'User', 
-      required: true,
+  responsible: [
+    {
+      _id: {
+        type: Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true,
+      },
     },
-    user_name: {
-      type: String,
-    },
-  },
+  ],
   description: {
     type: String,
     required: true,
@@ -70,21 +69,8 @@ const Unit = new Schema({
     { 
       _id: {
         type: Schema.Types.ObjectId, 
-        ref: 'Company', 
+        ref: 'Unit', 
         required: true,
-      },
-      active_name: {
-        type: String,
-      },
-      responsible: {
-        _id: {
-          type: Schema.Types.ObjectId, 
-          ref: 'User', 
-          required: true,
-        },
-        user_name: {
-          type: String,
-        },
       },
     },
   ],
