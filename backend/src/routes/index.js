@@ -2,36 +2,32 @@ const express = require('express');
 const router = express.Router();
 
 const companyController = require('../controllers/companyController');
-const userController = require('../controllers/userController');
 const unitController = require('../controllers/unitController');
 const activeController = require('../controllers/activeController');
+const userController = require('../controllers/userController');
 
 // Rotas empresas de forma geral
-router.get('/empresa', companyController.index);
-router.post('/empresa', companyController.create);
-router.put('/empresa/:company_id', companyController.update);
-router.delete('/empresa/:company_id', companyController.destroy);
+router.get('/empresas', companyController.index);
+router.post('/empresas', companyController.create);
+router.put('/empresas/:company_id', companyController.update);
+router.delete('/empresas/:company_id', companyController.destroy);
 
 // Rotas unidades
-router.get('/empresa/:company_id/unidades', unitController.index);
-router.get('/empresa/:company_id/unidades/:unit_id', unitController.show);
-router.post('/empresa/:company_id/unidades', unitController.create);
-router.put('/empresa/:company_id/unidades/:unit_id', unitController.update);
-router.delete('/empresa/:company_id/unidades/:unit_id', unitController.destroy);
+router.get('/empresas/unidade/:unit_id', unitController.show);
+router.post('/empresas/:company_id/unidade', unitController.create);
+router.put('/empresas/unidade/:unit_id', unitController.update);
+router.delete('/empresas/:company_id/unidade/:unit_id', unitController.destroy);
 
 // Rotas ativos
-router.get('/empresa/:company_id/unidades/:unit_id/ativos', activeController.index);
-router.get('/empresa/:company_id/unidades/:unit_id/ativos/:active_id', activeController.show);
-router.post('/empresa/:company_id/unidades/:unit_id/ativos', activeController.create);
-router.put('/empresa/:company_id/unidades/:unit_id/ativos/:active_id', activeController.update);
-router.delete('/empresa/:company_id/unidades/:unit_id/ativos/:active_id', activeController.destroy);
+router.get('/empresas/unidade/ativo/:active_id', activeController.show);
+router.post('/empresas/:company_id/unidade/:unit_id/ativo', activeController.create);
+router.put('/empresas/ativo/:active_id', activeController.update);
+router.delete('/empresas/unidade/:unit_id/ativo/:active_id', activeController.destroy);
 
 // Rotas usuários
-router.get('/empresa/:company_id/usuarios', userController.index);
-router.get('/empresa/:company_id/usuarios/:user_id', userController.show);
-router.post('/empresa/:company_id/usuarios', userController.create);
-router.put('/empresa/:company_id/usuarios/:user_id', userController.update);
-router.delete('/empresa/:company_id/usuarios/:user_id', userController.destroy);
-
+router.get('/empresas/usuario/:user_id', userController.show);
+router.post('/empresas/:company_id/usuario', userController.create);
+router.put('/empresas/usuario/:user_id', userController.update);
+router.delete('/empresas/:company_id/usuario/:user_id', userController.destroy);
 
 module.exports = router;

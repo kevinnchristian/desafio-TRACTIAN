@@ -1,28 +1,7 @@
-const [ Company, Unit, Active ] = require('../models/Company');
+const Company = require('../models/Company');
+const [ Active, Unit ] = require('../models/Unit');
 
 const ActiveController = {
-  index: async (req, res) => {
-    try {
-      const { unit_id } = req.params;
-      const unit = await Unit.findOne({ "_id": unit_id })
-      .then(unit => {
-        return res.status(200).json(unit.actives);
-      }).catch(err => {
-        if (err) {
-          return res.status(400).json({
-              msg: "Request error",
-            }) && 
-            console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
-        }
-      })
-    } catch (err) {
-      return res.status(400).json({ 
-        error: true,
-        msg: "Not registration" 
-      });
-    }
-  },
-
   show: async (req, res) => {
     try {
       const { active_id } = req.params;
@@ -47,7 +26,7 @@ const ActiveController = {
 
   create: async (req, res) => {
     try {
-      const { company_id } = req.params;
+      const { company_id, unit_id } = req.params;
       const { 
         image,
         active_name,
@@ -63,6 +42,7 @@ const ActiveController = {
         lifespan 
       } = req.body;
       const company = await Company.findOne({ "_id": company_id });
+      const unit = await Unit.findOne({ "_id": unit_id });
       const newActive = await Active.create({ 
         image,
         active_name,
@@ -77,10 +57,10 @@ const ActiveController = {
         yearPurchase,
         lifespan 
       });
-      
-      company.units.actives.push(newActive._id);
+
+      unit.actives.push(newActive._id);
       await company.save()
-      .then(user => {
+      .then(active => {
         return res.status(201).json(newActive);
       }).catch(err => {
         if (err) {
@@ -152,12 +132,12 @@ const ActiveController = {
 
   destroy: async (req, res) => {
     try {
-      const { company_id, active_id } = req.params;
-      const company = await Company.findOne({ "_id": company_id })
+      const { unit_id, active_id } = req.params;
+      const unit = await Unit.findOne({ "_id": unit_id })
       const deleteActive = await Active.findByIdAndRemove({ "_id": active_id });
 
-      company.units.actives.remove({ "_id": active_id });
-      await company.save()
+      unit.actives.remove({ "_id": active_id });
+      await unit.save()
       .then(result => {
         return res.sendStatus(204);
       })

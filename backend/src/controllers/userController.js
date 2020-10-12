@@ -1,28 +1,7 @@
-const [ Company, User ] = require('../models/Company');
+const Company = require('../models/Company');
+const User = require('../models/User');
 
 const UserController = {
-  index: async (req, res) => {
-    try {
-      const { company_id } = req.params;
-      const company = await Company.findOne({ "_id": company_id })
-      .then(company => {
-        return res.status(200).json(company.users);
-      }).catch(err => {
-        if (err) {
-          return res.status(400).json({
-              msg: "Request error",
-            }) && 
-            console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
-        }
-      })
-    } catch (err) {
-      return res.status(400).json({ 
-        error: true,
-        msg: "Not registration" 
-      });
-    }
-  },
-
   show: async (req, res) => {
     try {
       const { user_id } = req.params;
@@ -81,8 +60,8 @@ const UserController = {
         registration, 
         office
       }, { new: true })
-      .then(result => {
-        return res.status(201).json(result);
+      .then(user => {
+        return res.status(201).json(user);
       })
       .catch(err => {
         if (err) {

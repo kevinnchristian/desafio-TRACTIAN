@@ -1,4 +1,4 @@
-const [ Company ] = require('../models/Company');
+const Company = require('../models/Company');
 
 const CompanyController = {
   index: async (_req, res) => {
