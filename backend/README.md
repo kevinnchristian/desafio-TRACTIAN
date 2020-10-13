@@ -6,7 +6,10 @@
 - Instalar Nodemon: `yarn add nodemon -D`
 - Instalar Mongoose: `yarn add mongoose`
 - Instalar .env: `yarn add dotenv`
+- Instalar File System: `yarn add fs`
 - Instalar Multer: `yarn add multer`
+- Instalar Multer-S3: `yarn add multer-s3`
+- Instalar AWS-SDK: `yarn add aws-sdk`
 
 ### Comandos utilizados:
 - Para iniciar projeto node: `yarn init -y`
