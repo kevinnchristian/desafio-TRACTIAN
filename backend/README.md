@@ -28,3 +28,5 @@
 - O módulo `cors` faz com que a aplicação saiba que nenhuma outra fora a nossa está tentando fazer conexão com a nossa API
 - O arquivo `.env.example` tem o exemplo de como deve ser criado o arquivo `.env`, este arquivo tem que conter a URI que o `Mongo Atlas` disponibiliza para conexão com banco
 - `Multer` é o middleware express utilizado manipular requisições multipart-form, são requisições que traz arquivos
+- `Multer-S3` nos permite configurar storage na `AWS`
+- `AWS-SDK` é uma lib que contém todas as configurações da AWS, com a integração Node.js com a API da AWS(neste caso seria API do S3)

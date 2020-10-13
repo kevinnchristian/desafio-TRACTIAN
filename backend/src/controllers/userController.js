@@ -94,7 +94,7 @@ const UserController = {
       .catch(err => {
         if (err) {
           return res.status(400).json({
-              msg: "Company not found",
+              msg: "User not found",
             }) && 
             console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
         }

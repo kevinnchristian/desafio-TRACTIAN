@@ -63,7 +63,7 @@ const UnitController = {
       .catch(err => {
         if (err) {
           return res.status(400).json({
-              msg: "User not found",
+              msg: "Unit not found",
             }) && 
             console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
         }
@@ -91,7 +91,7 @@ const UnitController = {
       .catch(err => {
         if (err) {
           return res.status(400).json({
-              msg: "Company not found",
+              msg: "Unit not found",
             }) && 
             console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
         }

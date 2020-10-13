@@ -2,8 +2,14 @@ const { Schema, model } = require('mongoose');
 
 const Active = new Schema({
   image: {
-    type: String,
-    required: true,
+    imgKey: {
+      type: String,
+      required: true,
+    },
+    imgUrl: {
+      type: String,
+      required: true,
+    }
   },
   active_name: {
     type: String,

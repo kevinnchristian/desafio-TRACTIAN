@@ -1,5 +1,11 @@
 const Company = require('../models/Company');
 const [ Active, Unit ] = require('../models/Unit');
+const fs = require('fs');
+const path = require('path');
+const { promisify } = require('util');  // converte uma função que usa a forma antiga de lidar com callback(programação async), ex: fs, para a nova forma de programação async
+const aws = require('aws-sdk');
+
+const s3 = new aws.S3();
 
 const ActiveController = {
   show: async (req, res) => {
@@ -27,7 +33,7 @@ const ActiveController = {
   create: async (req, res) => {
     try {
       const { unit_id } = req.params;
-      const { filename: key } = req.file;
+      const { key, location: url = "" } = req.file;
       const { 
         active_name,
         responsible: resp, 
@@ -41,9 +47,21 @@ const ActiveController = {
         yearPurchase,
         lifespan 
       } = req.body;
+
+      function verifyUrl(url) {
+        if (url == "") {
+          return url = `${process.env.APP_URL}/image/${key}`;
+        } else {
+          return url;
+        }
+      };
+
       const unit = await Unit.findOne({ "_id": unit_id });
       const newActive = await Active.create({ 
-        image: key,
+        image: {
+          imgKey: `${key}`,
+          imgUrl: `${verifyUrl(url)}`,
+        },
         active_name,
         responsible: JSON.parse(resp),
         description,
@@ -81,7 +99,7 @@ const ActiveController = {
   update: async (req, res) => { 
     try {
       const { active_id } = req.params;
-      const { filename: key } = req.file;
+      const { key, url = "" } = req.file;
       const { 
         active_name,
         responsible: resp, 
@@ -97,7 +115,10 @@ const ActiveController = {
       } = req.body;  
       const updateActive = await Active.findOneAndUpdate({ "_id": active_id },
       { 
-        image: key,
+        image: {
+          key,
+          url
+        },
         active_name,
         responsible: JSON.parse(resp),
         description,
@@ -116,7 +137,7 @@ const ActiveController = {
       .catch(err => {
         if (err) {
           return res.status(400).json({
-              msg: "User not found",
+              msg: "Active not found",
             }) && 
             console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
         }
@@ -136,6 +157,17 @@ const ActiveController = {
       const unit = await Unit.findOne({ "_id": unit_id })
       const deleteActive = await Active.findByIdAndRemove({ "_id": active_id });
 
+      if (await process.env.STORAGE_TYPE === 's3') {
+        s3.deleteObject({
+          Bucket: process.env.AWS_BUCKET,
+          Key: deleteActive.image.imgKey,
+        }).promise();
+      } else {
+        promisify(fs.unlink)(
+          path.resolve(__dirname, '..', '..', 'tmp', 'uploads', deleteActive.image.imgKey)
+        )
+      };
+      
       unit.actives.remove({ "_id": active_id });
       await unit.save()
       .then(result => {
@@ -144,7 +176,7 @@ const ActiveController = {
       .catch(err => {
         if (err) {
           return res.status(400).json({
-              msg: "Company not found",
+              msg: "Active not found",
             }) && 
             console.log(`⚠️  Error: ${err.name} - 💬 Message: ${err.messageFormat}`);
         }

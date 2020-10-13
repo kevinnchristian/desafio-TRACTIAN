@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const createError = require('http-errors');
 const cors = require('cors');
+require("dotenv").config();
 const database = require('./database');
 
 const indexRouter = require('./routes');
@@ -15,7 +16,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  '/image',
+  express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
+);
 
 app.use('/', indexRouter);
 
