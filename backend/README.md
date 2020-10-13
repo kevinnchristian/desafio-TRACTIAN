@@ -24,7 +24,7 @@
 
 ### Software para teste:
 - `Insomnia` - Testando métodos HTTP e Parâmetros
-- O arquivo de testes é o ``, basta baixar e rodar no insomnia
+- O arquivo de testes é o `teste_insomnia_backend`, basta baixar e rodar no insomnia
 
 ### Observações:
 - Server está rodando na porta `3335`
