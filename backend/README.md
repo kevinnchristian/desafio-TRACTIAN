@@ -10,7 +10,8 @@
 
 ### Comandos utilizados:
 - Para iniciar projeto node: `yarn init -y`
-- Para rodar a aplicação `yarn start`, este comando irá executar o script: `nodemon ./src/bin/www`
+- Para rodar a aplicação em ambiente de desenvolvimento `yarn dev`, este comando irá executar o script: `nodemon ./src/bin/www`
+- Para rodar a aplicação em produção `yarn start`, este comando irá executar o script: `node ./src/bin/www`
 
 ### Banco de Dados - MongoDB Atlas
 - Criar um cluster na plataforma web `MongoDB Atlas`
