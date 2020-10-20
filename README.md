@@ -1,4 +1,4 @@
-# Desenvolver uma API usando MongoDB e Mongoose
+# Desenvolver API usando MongoDB e Mongoose
 
 ### Dependências
 - Instalar Express.js: `yarn add express`
