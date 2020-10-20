@@ -7,6 +7,14 @@ const aws = require('aws-sdk');
 
 const s3 = new aws.S3();
 
+function verifyUrl(url) {
+  if (url == "") {
+    return url = `${process.env.APP_URL}/image/${key}`;
+  } else {
+    return url;
+  }
+};
+
 const ActiveController = {
   show: async (req, res) => {
     try {
@@ -47,14 +55,6 @@ const ActiveController = {
         yearPurchase,
         lifespan 
       } = req.body;
-
-      function verifyUrl(url) {
-        if (url == "") {
-          return url = `${process.env.APP_URL}/image/${key}`;
-        } else {
-          return url;
-        }
-      };
 
       const unit = await Unit.findOne({ "_id": unit_id });
       const newActive = await Active.create({ 
@@ -99,7 +99,7 @@ const ActiveController = {
   update: async (req, res) => { 
     try {
       const { active_id } = req.params;
-      const { key, url = "" } = req.file;
+      const { key, location: url = "" } = req.file;
       const { 
         active_name,
         responsible: resp, 
@@ -116,8 +116,8 @@ const ActiveController = {
       const updateActive = await Active.findOneAndUpdate({ "_id": active_id },
       { 
         image: {
-          key,
-          url
+          imgKey: `${key}`,
+          imgUrl: `${verifyUrl(url)}`,
         },
         active_name,
         responsible: JSON.parse(resp),
