@@ -28,35 +28,35 @@
 
 ### Hospedagem:
 - Plataforma utilizada para hospedagem: `Heroku`
-- Url principal da API: `https://desafiotractian.herokuapp.com/empresas`
+- Url principal da API: `https://api-empresa.herokuapp.com/companies`
 
 
 - Rotas empresas de forma geral:
-  - Listar: `https://desafiotractian.herokuapp.com/empresas`
-  - Criar: `https://desafiotractian.herokuapp.com/empresas`
-  - Atualizar: `https://desafiotractian.herokuapp.com/empresas/:company_id`
-  - Deletar: `https://desafiotractian.herokuapp.com/empresas/:company_id`
+  - Listar: `https://api-empresa.herokuapp.com/companies`
+  - Criar: `https://api-empresa.herokuapp.com/companies`
+  - Atualizar: `https://api-empresa.herokuapp.com/companies/:company_id`
+  - Deletar: `https://api-empresa.herokuapp.com/companies/:company_id`
 
 
 - Rotas unidades:
-  - Listar: `https://desafiotractian.herokuapp.com/empresas/unidade/:unit_id`
-  - Criar: `https://desafiotractian.herokuapp.com/empresas/:company_id/unidade`
-  - Atualizar: `https://desafiotractian.herokuapp.com/empresas/unidade/:unit_id`
-  - Deletar: `https://desafiotractian.herokuapp.com/empresas/:company_id/unidade/:unit_id`
+  - Listar: `https://api-empresa.herokuapp.com/companies/unit/:unit_id`
+  - Criar: `https://api-empresa.herokuapp.com/companies/:company_id/unit`
+  - Atualizar: `https://api-empresa.herokuapp.com/companies/unit/:unit_id`
+  - Deletar: `https://api-empresa.herokuapp.com/companies/:company_id/unit/:unit_id`
  
   
 - Rotas ativos:
-  - Listar: `https://desafiotractian.herokuapp.com/empresas/unidade/ativo/:active_id`
-  - Criar: `https://desafiotractian.herokuapp.com/empresas/unidade/:unit_id/ativo`
-  - Atualizar: `https://desafiotractian.herokuapp.com/empresas/ativo/:active_id`
-  - Deletar: `https://desafiotractian.herokuapp.com/empresas/unidade/:unit_id/ativo/:active_id`
+  - Listar: `https://api-empresa.herokuapp.com/companies/unit/active/:active_id`
+  - Criar: `https://api-empresa.herokuapp.com/companies/unit/:unit_id/active`
+  - Atualizar: `https://api-empresa.herokuapp.com/companies/active/:active_id`
+  - Deletar: `https://api-empresa.herokuapp.com/companies/unit/:unit_id/active/:active_id`
  
   
 - Rotas usuários:
-  - Listar: `https://desafiotractian.herokuapp.com/empresas/usuario/:user_id`
-  - Criar: `https://desafiotractian.herokuapp.com/empresas/:company_id/usuario`
-  - Atualizar: `https://desafiotractian.herokuapp.com/usuario/:user_id`
-  - Deletar: `https://desafiotractian.herokuapp.com/empresas/:company_id/usuario/:user_id`
+  - Listar: `https://api-empresa.herokuapp.com/companies/user/:user_id`
+  - Criar: `https://api-empresa.herokuapp.com/companies/:company_id/user`
+  - Atualizar: `https://api-empresa.herokuapp.com/user/:user_id`
+  - Deletar: `https://api-empresa.herokuapp.com/companies/:company_id/user/:user_id`
 
 
 ### Observações:
